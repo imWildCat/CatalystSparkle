@@ -45,3 +45,7 @@ ci:
 check-localizations:
 	./Sparkle/CheckLocalizations.swift -root . -htmlPath "$(TMPDIR)/LocalizationsReport.htm"
 	open "$(TMPDIR)/LocalizationsReport.htm"
+
+build-xcframework:
+	xcodebuild archive -configuration Release -scheme Sparkle -destination='generic/platform=macOS,variant=Mac Catalyst' -archivePath "./demo" SKIP_INSTALL=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES
+	xcodebuild -create-xcframework -framework ./demo.xcarchive/Products/Library/Frameworks/Sparkle.framework -debug-symbols ./demo.xcarchive/dSYMs  -output Sparkle.xcframework
